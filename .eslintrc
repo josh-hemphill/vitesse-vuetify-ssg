@@ -1,0 +1,128 @@
+{
+	"root": true,
+	"extends": [
+		"eslint:recommended",
+		"plugin:@typescript-eslint/recommended",
+		"@antfu",
+		"./.eslintrc-auto-import.json"
+	],
+	"plugins": [
+		"import",
+		"node"
+	],
+	"rules": {
+		"vue/max-attributes-per-line": [
+			"warn",
+			{
+				"singleline": 1,
+				"multiline": 1
+			}
+		],
+		"no-console": "warn",
+		"no-debugger": "warn",
+		"space-before-function-paren": "warn",
+		"comma-dangle": [
+			"warn",
+			"always-multiline"
+		],
+		"quotes": [
+			"warn",
+			"single",
+			{
+				"avoidEscape": true,
+				"allowTemplateLiterals": true
+			}
+		],
+		"strict": [
+			"error",
+			"global"
+		],
+		"eqeqeq": "warn",
+		"semi": [
+			"warn",
+			"always",
+			{
+				"omitLastInOneLineBlock": true
+			}
+		],
+		"no-template-curly-in-string": "warn",
+		"indent": "off",
+		"@typescript-eslint/semi": "off",
+		"@typescript-eslint/indent": [
+			"warn",
+			"tab"
+		],
+		"no-tabs": [
+			"warn",
+			{
+				"allowIndentationTabs": true
+			}
+		],
+		"no-unneeded-ternary": [
+			"warn"
+		],
+		"linebreak-style": [
+			"warn",
+			"unix"
+		],
+		"arrow-parens": [
+			"warn",
+			"always"
+		],
+		"no-unused-vars": [
+			"warn"
+		],
+		"@typescript-eslint/ban-ts-comment": "warn",
+		"import/extensions": [
+			"warn",
+			"ignorePackages",
+			{
+				"vue": "always"
+			}
+		],
+		"import/no-named-default": "off"
+	},
+	"env": {
+		"node": true,
+		"es2020": true
+	},
+	"parserOptions": {
+		"sourceType": "module"
+	},
+	"overrides": [
+		{
+			"files": [
+				"*.ts"
+			],
+			"rules": {
+				"no-unused-vars": "off"
+			}
+		},
+		{
+			"files": [
+				"*.vue"
+			],
+			"rules": {
+				"yml/no-tab-indent": "off",
+				"import/extensions": [
+					"warn",
+					"never"
+				]
+			}
+		},
+		{
+			"files": [
+				"*.cjs"
+			],
+			"rules": {
+				"@typescript-eslint/explicit-module-boundary-types": "off",
+				"@typescript-eslint/no-unused-vars": "off",
+				"@typescript-eslint/no-var-requires": "off",
+				"strict": "off"
+			},
+			"parserOptions": {
+				"sourceType": "script"
+			}
+		}
+	]
+}

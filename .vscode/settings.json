@@ -1,0 +1,65 @@
+{
+	"cSpell.words": [
+		"datetime",
+		"iconsets",
+		"simplecrypt",
+		"Vitesse",
+		"vueuse"
+	],
+	"i18n-ally.keystyle": "nested",
+	"i18n-ally.tabStyle": "tab",
+	"i18n-ally.sortKeys": true,
+	"i18n-ally.extract.ignoredByFiles": {
+		"vite.config.ts": true,
+	},
+	"i18n-ally.enabledFrameworks": [
+		"vue",
+		"vue-sfc",
+		"i18next",
+	],
+	"i18n-ally.enabledParsers": [
+		"js",
+		"json",
+		"json5",
+		"ts",
+		"yaml"
+	],
+	"i18n-ally.localesPaths": [
+		"locales"
+	],
+	"i18n-ally.includeSubfolders": true,
+	"i18n-ally.namespace": true,
+	"i18n-ally.pathMatcher": "{locale}/{namespaces}.{ext}",
+	"typescript.tsdk": "node_modules/typescript/lib",
+	"deno.enable": false,
+	"typescript.enable": false,
+	"javascript.enable": false,
+	"editor.linkedEditing": true,
+	"files.associations": {
+		"*.css": "postcss",
+	},
+	"material-icon-theme.folders.associations": {
+		"locales-ts": "I18n"
+	},
+	"eslint.format.enable": true,
+	"editor.formatOnSave": true,
+	"editor.tabSize": 3,
+	"volar.takeOverMode.enabled": true,
+	"html.format.wrapAttributes": "force-aligned",
+	"eslint.validate": [
+		"javascript",
+		"javascriptreact",
+		"typescript",
+		"typescriptreact",
+		"vue"
+	],
+	"[vue]": {
+		"editor.defaultFormatter": "dbaeumer.vscode-eslint",
+	},
+	"[javascript]": {
+		"editor.defaultFormatter": "dbaeumer.vscode-eslint"
+	},
+	"[typescript]": {
+		"editor.defaultFormatter": "dbaeumer.vscode-eslint"
+	},
+}

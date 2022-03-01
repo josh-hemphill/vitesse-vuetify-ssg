@@ -1,0 +1,48 @@
+{
+	"compilerOptions": {
+		"baseUrl": ".",
+		"module": "esnext",
+		"target": "ESNext",
+		"lib": [
+			"DOM",
+			"ESNext"
+		],
+		"strict": true,
+		"allowJs": true,
+		"sourceMap": true,
+		"incremental": false,
+		"skipLibCheck": true,
+		"moduleResolution": "node",
+		"resolveJsonModule": true,
+		"noUnusedLocals": true,
+		"strictNullChecks": true,
+		"useDefineForClassFields": true,
+		"forceConsistentCasingInFileNames": true,
+		"types": [
+			"vitest",
+			"cypress",
+			"vite/client",
+			"vite-plugin-pages/client",
+			"vite-plugin-vue-layouts/client",
+			"@intlify/vite-plugin-vue-i18n/client"
+		],
+		"paths": {
+			"~/*": [
+				"src/*"
+			],
+			"~~/*": [
+				"src/*"
+			],
+			"S_CONFIG/*": [
+				"shared-config/*"
+			],
+			"./*": [
+				"./*"
+			]
+		}
+	},
+	"exclude": [
+		"dist",
+		"node_modules"
+	]
+}
