@@ -16,12 +16,12 @@ const { t } = useI18n();
     </div>
     <router-view />
     <div>
-      <button
+      <v-btn
         class="btn m-3 text-sm mt-8"
         @click="router.back()"
       >
         {{ t('s.button.back') }}
-      </button>
+      </v-btn>
     </div>
   </main>
 </template>

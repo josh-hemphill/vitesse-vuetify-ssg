@@ -15,7 +15,10 @@ const go = () => {
 </script>
 
 <template>
-  <div>
+  <div
+    style="max-width: 300px;"
+    class="mx-auto"
+  >
     <p class="text-4xl">
       <v-icon
         :icon="mdiTent"
@@ -49,7 +52,7 @@ const go = () => {
     />
 
     <div>
-      <button
+      <v-btn
         class="m-3 text-sm btn"
         :disabled="!name"
         @click="go"

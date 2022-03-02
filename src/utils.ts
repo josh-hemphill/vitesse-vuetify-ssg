@@ -18,3 +18,8 @@ export const hyphenToCap = (str: string, startCap = false) => {
 	const up = str.replace(/-[a-z]/g, (m) => m[1].toUpperCase());
 	return startCap ? up.replace(/^[a-z]/g, (m) => m.toUpperCase()) : up;
 };
+
+export const proto = {
+	hasProperty: <T>(obj: T, key: PropertyKey): key is keyof T => Object.prototype.hasOwnProperty.call(obj, key),
+	propertyIsEnumerable: (obj: object, key: PropertyKey) => Object.prototype.propertyIsEnumerable.call(obj, key),
+};

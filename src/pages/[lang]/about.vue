@@ -13,19 +13,24 @@ const { t } = useI18n();
     </p>
 
     <template v-if="user.otherNames.length">
-      <p class="text-sm mt-4">
-        <v-list disabled>
-          <v-subheader>{{ t('s.intro.aka') }}:</v-subheader>
+      <p
+        class="text-sm mx-auto mt-4"
+        style="max-width: 300px;"
+      >
+        <v-list
+          disabled
+        >
+          <v-list-subheader>
+            {{ t('s.intro.aka') }}:
+          </v-list-subheader>
           <v-list-item
             v-for="(item, i) in user.otherNames"
             :key="i"
           >
-            <v-list-item-content class="mx-auto">
-              <v-list-item-title
-                class="mx-auto"
-                v-text="item"
-              />
-            </v-list-item-content>
+            <v-list-item-title
+              class="mx-auto"
+              v-text="item"
+            />
           </v-list-item>
         </v-list>
       </p>

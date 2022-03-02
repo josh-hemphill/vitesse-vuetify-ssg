@@ -19,6 +19,7 @@
 		"useDefineForClassFields": true,
 		"forceConsistentCasingInFileNames": true,
 		"types": [
+			"vite-ssg",
 			"vitest",
 			"cypress",
 			"vite/client",

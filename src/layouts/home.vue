@@ -1,6 +1,11 @@
 <template>
-  <main class="px-4 py-10 text-center text-gray-700 dark:text-gray-200">
-    <router-view />
-    <Footer />
-  </main>
+  <v-main
+    style="min-height: 90vh;"
+    class="pt-10 text-center text-gray-700 dark:text-gray-200 d-flex flex-col flex"
+  >
+    <v-container fluid>
+      <router-view />
+    </v-container>
+  </v-main>
+  <Footer />
 </template>

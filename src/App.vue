@@ -12,7 +12,11 @@ useHead({
 </script>
 
 <template>
-  <v-app :theme="isDark ? 'dark' : 'light'">
+  <v-app
+    style="height: 100vh;"
+    full-height
+    :theme="isDark ? 'dark' : 'light'"
+  >
     <router-view />
   </v-app>
 </template>
