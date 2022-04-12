@@ -13,7 +13,7 @@ export const install: UserModule = ({ app, router }) => {
 			locale: lang,
 			numberFormats: {},
 			datetimeFormats: {},
-			messages,
+			messages: messages(),
 		});
 		const vuetify = getCreateVuetifyWi18n(i18n);
 		app.use(vuetify);

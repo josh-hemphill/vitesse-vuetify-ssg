@@ -7,11 +7,7 @@ import './styles/main.css';
 
 const routes = setupLayouts(generatedRoutes);
 
-const getName = (str: string) => {
-	let parts = str.split('/');
-	parts = parts[parts.length - 1].split('.');
-	return parts[0];
-};
+const getName = (str: string) => str.split('/').pop()?.split('.')?.[0] || '';
 
 export const createApp = ViteSSG(
 	App,

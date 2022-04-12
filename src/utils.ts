@@ -3,11 +3,13 @@ export const alphabeticSort = function(a: string, b: string, caseSensitive = fal
 	return cS(a).localeCompare(cS(b)) * (reverse ? -1 : 1);
 };
 export const toUpperCase = (str: string) => {
-	if (!str) return str;
+	if (!str)
+		return str;
 	return String.prototype.toLocaleUpperCase.call(str);
 };
 export const toLowerCase = (str: string) => {
-	if (!str) return str;
+	if (!str)
+		return str;
 	return String.prototype.toLocaleLowerCase.call(str);
 };
 

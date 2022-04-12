@@ -12,7 +12,7 @@ import { isDark } from '~~/logic/index.js';
 
 export * as VuetifyLocales from 'vuetify/locale';
 // https://vuetifyjs.com/en/introduction/why-vuetify/#feature-guides
-export const getCreateVuetifyWi18n = (i18n: I18n<{}, {}, {}, string, false>) => {
+export const getCreateVuetifyWi18n = (i18n: I18n<{}, {}, string, false>) => {
 	return createVuetify({
 		icons: {
 			defaultSet: 'mdi',

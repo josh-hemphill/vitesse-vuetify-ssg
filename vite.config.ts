@@ -63,6 +63,11 @@ export default defineConfig({
 				'vue-i18n',
 				'@vueuse/head',
 				'@vueuse/core',
+				{
+					vuetify: [
+						'useDisplay',
+					],
+				},
 			],
 
 			// Generate corresponding .eslintrc-auto-import.json file.

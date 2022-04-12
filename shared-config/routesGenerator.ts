@@ -1,47 +1,77 @@
-import fs from 'fs';
-import glob from 'fast-glob';
-import YAML from 'yaml';
+import * as fs from 'fs';
+import * as _glob from 'fast-glob';
+import * as _YAML from 'yaml';
 import type { RouteRecordRaw } from 'vue-router';
+import { MESSAGE_GLOB, getMessages as compileMessages } from '../locales/index.js';
+import { defaultExport } from '../src/types.js';
 import { DEFAULT_LANG } from './defaults-config.js';
+const glob = defaultExport(_glob);
+const YAML = defaultExport(_YAML);
 type Route = RouteRecordRaw
 
-export const getLangs = () => Object.fromEntries(
-	glob.sync('./locales/*.y(a)?ml')
-		.map((v) => {
-			const yaml = v.endsWith('.yaml');
-			return [v.slice(10, yaml ? -5 : -4), v];
-		}),
-);
+const Langs: Set<string> = new Set();
+const LangFiles: { path: string;name: string;ext: string }[]
+	= glob.sync(`../locales/${MESSAGE_GLOB}`, { objectMode: true })
+		.map(({ path, name }) => {
+			const lang = path.split('/').filter((v) => v && v[0] !== '.').shift();
+			if (!lang)
+				throw new Error(`invalid language file: ${path}`);
+			const ext = name.split('.').pop();
+			if (!ext)
+				throw new Error(`invalid file extension: ${path}`);
+			if (lang)
+				Langs.add(lang);
+			return ({ path, name, lang, ext });
+		});
+
+export const getLangs = () => Array.from(Langs.values());
+
 // Import i18n resources
 // https://vitejs.dev/guide/features.html#glob-import
-export const getMessages = () => Object.fromEntries(
-	Object.entries(getLangs())
-		.map(([k, v]) => {
-			const file = fs.readFileSync(v, 'utf8');
-			const doc = YAML.parseDocument(file);
-			return [k, doc.contents];
-		}),
-);
+export const getMessages = async() => {
+	const mapped: Record<string, unknown> = {};
+	for (const { path, ext } of LangFiles) {
+		const file = fs.readFileSync(path, 'utf8');
+		const getYaml = (str: string) => (<any>YAML.parseDocument(str).contents);
+		const getImport = (str: string) => import(str).then((v) => defaultExport(v));
+		const getJson = (str: string) => JSON.parse(str);
+		const content = await ({
+			yaml: getYaml,
+			yml: getYaml,
+			json: getJson,
+			ts: getImport,
+			js: getImport,
+		}[ext] || getImport)(file);
+		mapped[path] = content;
+	}
+
+	return compileMessages(mapped);
+};
+
 export const onRoutesGenerated = (routes: Route[]) => {
 	const lRoutes: Route[] = [];
 	/* console.log('');
 	console.dir({ routes }); */
 	for (let i = 0; i < routes.length; i++) {
-		const v = routes[i].path;
+		const lRoute = routes[i];
+		const v = lRoute.path;
 		if (v.startsWith('/:all')) {
-			lRoutes.push({ ...routes[i], path: '/error' });
+			lRoutes.push({ ...lRoute, path: '/error' });
 			continue;
 		}
 
-		if (v === '/' && !routes[i].meta?.lang) {
-			routes[i].meta.lang = DEFAULT_LANG;
+		if (v === '/' && !lRoute.meta?.lang) {
+			if (!lRoute.meta)
+				lRoute.meta = {};
+			lRoute.meta.lang = DEFAULT_LANG;
 			continue;
 		}
 
 		if (v.startsWith('/:lang')) {
-			const LANGS = Object.keys(getLangs());
+			const LANGS = Array.from(getLangs());
+			if (!LANGS.length)
+				LANGS.push('en');
 			const langPath = v.slice(6) || '/index';
-			if (!LANGS.length) LANGS.push('en');
 			lRoutes.push(...LANGS
 				.map((ln): typeof routes[0] => ({
 					...routes[i],

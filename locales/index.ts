@@ -1,5 +1,5 @@
 import * as vuetifyLocales from 'vuetify/locale';
-import { proto } from '~/utils.js';
+import { proto } from '../src/utils.js';
 type R<T> = Record<string, T>;
 type VuetifyLocaleMap = typeof vuetifyMap;
 type Locales = keyof VuetifyLocaleMap;
@@ -21,10 +21,8 @@ const mappedVuetifyLocales = Object.fromEntries(Object.entries(vuetifyMap).map((
 	return [l, vuetifyLocales[v]] as const;
 }));
 const seenLangs: string[] = [];
-
-export const messages = ((<[string, string[], R<R<object>>][]>Object.entries(
-	// https://vitejs.dev/guide/features.html#glob-import
-	import.meta.globEager('./*/**/*.(y(a)?ml|ts|js)'),
+export const getMessages = (globImport: Record<string, any>) => ((<[string, string[], R<R<object>>][]>Object.entries(
+	globImport,
 )
 	.flatMap(([key, value]) => {
 		const pathParts = key.split('/').filter((v) => v && v[0] !== '.');
@@ -60,3 +58,8 @@ export const messages = ((<[string, string[], R<R<object>>][]>Object.entries(
 	Object.assign(curObj, value);
 	return acc;
 }, <R<any>>{}));
+export const MESSAGE_GLOB = '*/**/*.(y(a)?ml|ts|js)';
+export const messages = () => getMessages(
+	// https://vitejs.dev/guide/features.html#glob-import
+	import.meta.globEager('./*/**/*.(y(a)?ml|ts|js)'),
+);
