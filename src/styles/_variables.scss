@@ -1,2 +1,7 @@
 // Place SASS variable overrides here
 // $font-size-root: 18px;
+
+@use 'vuetify/styles' with (
+	$color-pack: true,
+	$utilities: true,
+);

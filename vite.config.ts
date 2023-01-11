@@ -4,21 +4,19 @@ import { defineConfig } from 'vite';
 import Vue from '@vitejs/plugin-vue';
 import Pages from 'vite-plugin-pages';
 import Layouts from 'vite-plugin-vue-layouts';
-import Icons from 'unplugin-icons/vite';
-import IconsResolver from 'unplugin-icons/resolver';
 import Components from 'unplugin-vue-components/vite';
+import { Vuetify3Resolver } from 'unplugin-vue-components/resolvers';
 import AutoImport from 'unplugin-auto-import/vite';
 import Markdown from 'vite-plugin-md';
 import { VitePWA } from 'vite-plugin-pwa';
-import { vueI18n } from '@intlify/vite-plugin-vue-i18n';
+import vueI18n from '@intlify/unplugin-vue-i18n/vite';
 import Inspect from 'vite-plugin-inspect';
 import Prism from 'markdown-it-prism';
-import * as _vuetify from '@vuetify/vite-plugin';
+import vuetify from 'vite-plugin-vuetify';
+import UnoCss from '@unocss/vite';
 import * as _LinkAttributes from 'markdown-it-link-attributes';
 import { onRoutesGenerated } from './shared-config/routesGenerator.js';
 import { defaultExport } from './src/types.js';
-/* import { useI18n } from 'vue-i18n'; */
-const vuetify = defaultExport(_vuetify);
 const LinkAttributes = defaultExport(_LinkAttributes);
 
 const basePath = `${path.resolve(__dirname, 'src')}/`;
@@ -30,6 +28,18 @@ export default defineConfig({
 			{ find: '~/', replacement: basePath },
 			{ find: 'S_CONFIG/', replacement: sharedConfigPath },
 			{ find: /^~~\/(.*)\.js$/, replacement: `${basePath}$1.ts` },
+		],
+		extensions: [
+		  ".js",
+		  ".json",
+		  ".jsx",
+		  ".mjs",
+		  ".md",
+		  ".ts",
+		  ".tsx",
+		  ".vue",
+		  ".css",
+		  ".scss",
 		],
 	},
 	plugins: [
@@ -51,8 +61,7 @@ export default defineConfig({
 
 		// https://github.com/vuetifyjs/vuetify-loader/tree/next/packages/vite-plugin
 		vuetify({
-			autoImport: true,
-			styles: true,
+			autoImport: false,
 		}),
 
 		// https://github.com/antfu/unplugin-auto-import
@@ -63,21 +72,24 @@ export default defineConfig({
 				'vue-i18n',
 				'@vueuse/head',
 				'@vueuse/core',
+				'pinia',
 				{
 					vuetify: [
 						'useDisplay',
 					],
+					'@mdi/js': Object.keys(await import('@mdi/js')).filter(v=>v.startsWith('mdi')),
 				},
 			],
+			vueTemplate: true,
 
 			// Generate corresponding .eslintrc-auto-import.json file.
 			// eslint globals Docs - https://eslint.org/docs/user-guide/configuring/language-options#specifying-globals
 			eslintrc: {
 				enabled: true, // Default `false`
-				filepath: './.eslintrc-auto-import.json', // Default `./.eslintrc-auto-import.json`
+				filepath: './.eslintrc.auto-import.json', // Default `./.eslintrc-auto-import.json`
 				globalsPropValue: 'readonly', // Default `true`, (true | false | 'readonly' | 'readable' | 'writable' | 'writeable')
 			},
-			dts: 'src/auto-imports.d.ts',
+			dts: 'src/auto.imports.d.ts',
 		}),
 
 		// https://github.com/antfu/unplugin-vue-components
@@ -85,25 +97,15 @@ export default defineConfig({
 			// allow auto load markdown components under `./src/components/`
 			extensions: ['vue', 'md'],
 
-			dts: 'src/components.d.ts',
+			dts: 'src/auto.components.d.ts',
 
 			// allow auto import and register components used in markdown
 			include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
 
 			// custom resolvers
 			resolvers: [
-				// auto import icons
-				// https://github.com/antfu/unplugin-icons
-				IconsResolver({
-					prefix: false,
-					enabledCollections: [],
-				}),
+				Vuetify3Resolver(),
 			],
-		}),
-
-		// https://github.com/antfu/unplugin-icons
-		Icons({
-			compiler: 'vue3',
 		}),
 
 		// https://github.com/antfu/vite-plugin-md
@@ -160,6 +162,13 @@ export default defineConfig({
 			include: [path.resolve(__dirname, 'locales/**')],
 		}),
 
+		UnoCss({
+			presets:[],
+			rules:[
+				// Auto-transform CSS classes to create your own directives
+			]
+		}),
+
 		// https://github.com/antfu/vite-plugin-inspect
 		Inspect({
 			// change this to enable inspect for debugging
@@ -190,6 +199,9 @@ export default defineConfig({
 		onPageRendered: (route, html, ctx) => {
 			return html;
 		}, */
+	},
+	ssr: {
+		noExternal: ['vuetify']
 	},
 
 	optimizeDeps: {

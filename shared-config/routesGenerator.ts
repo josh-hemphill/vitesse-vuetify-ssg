@@ -28,7 +28,7 @@ export const getLangs = () => Array.from(Langs.values());
 
 // Import i18n resources
 // https://vitejs.dev/guide/features.html#glob-import
-export const getMessages = async() => {
+export const getMessages = async () => {
 	const mapped: Record<string, unknown> = {};
 	for (const { path, ext } of LangFiles) {
 		const file = fs.readFileSync(path, 'utf8');
@@ -85,7 +85,7 @@ export const onRoutesGenerated = (routes: Route[]) => {
 				name: langPath.slice(1),
 				path: langPath,
 				meta: { ...(routes[i]?.meta || {}), lang: DEFAULT_LANG },
-				alias: langPath.endsWith('index') ? `/` : undefined,
+				alias: langPath.endsWith('index') ? '/' : undefined,
 			});
 			continue;
 		}

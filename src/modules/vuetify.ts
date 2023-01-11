@@ -1,5 +1,5 @@
 // Styles
-import 'vuetify/styles/main.css';
+import 'vuetify/styles';
 import { createVueI18nAdapter } from 'vuetify/lib/locale/adapters/vue-i18n.mjs';
 import { useI18n } from 'vue-i18n';
 import type { I18n } from 'vue-i18n';
@@ -12,7 +12,7 @@ import { isDark } from '~~/logic/index.js';
 
 export * as VuetifyLocales from 'vuetify/locale';
 // https://vuetifyjs.com/en/introduction/why-vuetify/#feature-guides
-export const getCreateVuetifyWi18n = (i18n: I18n<{}, {}, string, false>) => {
+export const getCreateVuetifyWi18n = (i18n: I18n<R<any>, {}, {}, string, false>) => {
 	return createVuetify({
 		icons: {
 			defaultSet: 'mdi',

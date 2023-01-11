@@ -3,6 +3,7 @@ import generatedRoutes from 'virtual:generated-pages';
 import { setupLayouts } from 'virtual:generated-layouts';
 import App from './App.vue';
 // your custom styles here
+import 'uno.css'
 import './styles/main.css';
 
 const routes = setupLayouts(generatedRoutes);
@@ -15,10 +16,10 @@ export const createApp = ViteSSG(
 	async(ctx) => {
 		// install all modules under `modules/`
 		const detected: string[] = [];
-		const mods = Object.entries(import.meta.globEager('./modules/*.ts'))
+		const mods = Object.entries(import.meta.glob('./modules/*.ts', { eager: true }))
 			.map((i) => {
 				detected.push(getName(i[0]));
-				return i[1].install?.(ctx);
+				return (<Record<string,CallableFunction>>(i[1])).install?.(ctx);
 			});
 		await Promise
 			.all(mods);

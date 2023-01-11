@@ -24,3 +24,5 @@ declare module 'virtual:pwa-register/vue' {
 		updateServiceWorker: (reloadPage?: boolean) => Promise<void>
 	}
 }
+
+declare type R<T> = Record<string, T>

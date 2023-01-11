@@ -10,6 +10,7 @@
 			"DOM",
 			"ESNext"
 		],
+		"outDir": "no-op",
 		"strict": true,
 		"allowJs": true,
 		"sourceMap": true,
@@ -28,7 +29,7 @@
 			"vite/client",
 			"vite-plugin-pages/client",
 			"vite-plugin-vue-layouts/client",
-			"@intlify/vite-plugin-vue-i18n/client"
+			"@intlify/unplugin-vue-i18n/messages"
 		],
 		"paths": {
 			"~/*": [
